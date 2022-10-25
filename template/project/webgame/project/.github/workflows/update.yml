@@ -1,13 +1,16 @@
 name: 更新
 on:
   push:
-    branches: [update]
+    tags:
+      - v*
 jobs:
   release:
     env:
       STUFF_DEBUG: 1
+      STUFF_MODE: release
+      STUFF_UPLOAD: review
     runs-on: [self-hosted, x64, game]
-    name: package
+    name: 營運版
     steps:
       - name: 訊息
         run: |
@@ -15,9 +18,5 @@ jobs:
           report "複製專案"
       - uses: actions/checkout@v3
       - name: 部署
-        run: |
-          mkdir -p /tmp/ramdisk/stuff/
-          cp /actions-runner/_work/stuff/stuff/* -Rf /tmp/ramdisk/stuff/
-          cd /tmp/ramdisk/stuff/
-          npm install
+        run: stuff deploy
 
