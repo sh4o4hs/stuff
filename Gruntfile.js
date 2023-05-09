@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     RELEASE:'release'
   };
   
-  console.log('[stuff version 7.8.0]');
+  console.log('[stuff version 7.9.0]');
 
   grunt.file.setBase(__dirname);
 
@@ -2666,7 +2666,7 @@ module.exports = function(grunt) {
 
       create:{
         command(name) {
-          let cmd = 'grunt-init template/project/webgame5';
+          let cmd = 'grunt-init template/project/webgame6';
           if(name){
             cmd = 'grunt-init template/project/' + name;
           }
@@ -3446,14 +3446,16 @@ module.exports = function(grunt) {
 
     console.log(images);
     
-    let cmd = `magick -size ${w}x${h} xc:none `;
+    // -define png:size=${w}x${h}
+    let cmd = `magick montage -size ${w}x${h} `;
     
+    // -geometry +${rect.x}-${rect.y} 
     
     rectList.forEach(rect => {
-      cmd += `${workspace.root}/${rect.title} ${workspace.root}/${assetPath}/test.png ${workspace.root}/${assetPath}/test.png -geometry +${rect.x}+${rect.y} -composite `;
+      cmd += `${workspace.root}/${rect.title} `;
     });
 
-    cmd += `-compose CopyOpacity ${workspace.root}/${assetPath}/test.png`;
+    cmd += `-background none ${workspace.root}/${assetPath}/test.png`;
 
     shell.exec(cmd);
 
