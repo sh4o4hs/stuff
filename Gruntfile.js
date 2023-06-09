@@ -19,15 +19,15 @@ module.exports = function(grunt) {
     RELEASE:'release'
   };
   
-  console.log('[stuff version 7.9.0]');
+  console.log('[stuff version 7.10.0]');
 
   grunt.file.setBase(__dirname);
 
   let isFramework = null;
   let pkg = {};
   let resConfig = {};
-  // let agentPath = 'project/agent';    // 除錯用
-  let agentPath = 'developer/agent';     // 遊戲專案測試用
+  let agentPath = 'project/agent';    // 除錯用
+  // let agentPath = 'developer/agent';     // 遊戲專案測試用
   let workspace = {
     basePath: 'project',
     hasConfig: false,
@@ -573,7 +573,7 @@ module.exports = function(grunt) {
         src: isFramework || ['<%= pkg.workspace %>/app/<%= pkg.output %>*.*','<%= pkg.workspace %>/app']
       },
       config: {
-        src: isFramework || ['<%= pkg.workspace %>/config/**/*.*','<%= pkg.workspace %>/config']
+        src: isFramework || ['<%= pkg.workspace %>/config/**/v*.{json, txt}']
       },
       debug: {
           src: isFramework || ['<%= pkg.workspace %>/v*.{json, html}', '<%= pkg.workspace %>/debug/**/*.*', '<%= pkg.workspace %>/debug/**/*', '<%= pkg.workspace %>/debug', '<%= pkg.workspace %>/tmp/debug.json']
@@ -734,7 +734,7 @@ module.exports = function(grunt) {
                   let str = `import("${pathname}");`;
                   return str;
                 },
-
+                
                 importmapName() {
                   let pathname = this.pathname.replace('depend:', '/dependence/');
                   let str = `"${this.key}": "${pathname}"`;
