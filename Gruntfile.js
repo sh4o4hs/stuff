@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     RELEASE:'release'
   };
   
-  console.log('[stuff version 7.10.2]');
+  console.log('[stuff version 7.11.0]');
 
   grunt.file.setBase(__dirname);
 
@@ -230,7 +230,7 @@ module.exports = function(grunt) {
           'app/**/*.{js,mjs}'
         ],
         resource: [
-          'systemjs/6.13.0/system.min.js'
+          'systemjs/6.14.1/system.min.js'
         ],
         output: 'config/cache.txt'
       }
