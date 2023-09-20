@@ -19,15 +19,15 @@ module.exports = function(grunt) {
     RELEASE:'release'
   };
   
-  console.log('[stuff version 7.12.0]');
+  console.log('[stuff version 7.13.0]');
 
   grunt.file.setBase(__dirname);
 
   let isFramework = null;
   let pkg = {};
   let resConfig = {};
-  // let agentPath = 'project/agent';    // 除錯用
-  let agentPath = 'developer/agent';     // 遊戲專案測試用
+  let agentPath = 'project/agent';    // 除錯用
+  // let agentPath = 'developer/agent';     // 遊戲專案測試用
   let workspace = {
     basePath: 'project',
     hasConfig: false,
@@ -230,7 +230,7 @@ module.exports = function(grunt) {
           'app/**/*.{js,mjs}'
         ],
         resource: [
-          'systemjs/6.14.1/system.min.js'
+          'systemjs/6.14.2/system.min.js'
         ],
         output: 'config/cache.txt'
       }
@@ -4019,7 +4019,7 @@ module.exports = function(grunt) {
     }
 
     grunt.config.set('clean.public', JSON.parse(str));
-    if(workspace.public.useClean){
+    if(workspace.public.useClean) {
       cmdList.push(cleanName);
     }
 
@@ -4038,7 +4038,7 @@ module.exports = function(grunt) {
       });
     }
 
-    if(isFramework){
+    if(isFramework) {
       let files = workspace.public.cloneList;
       if(framework.systemjs && framework.systemjs.data && Array.isArray(framework.systemjs.data)){
         framework.systemjs.data.forEach(function (d){
@@ -4096,24 +4096,25 @@ module.exports = function(grunt) {
         cmdList.push('replace:importmap');
       }
 
-      if(pkg.currentMode === MODE.RELEASE) {
-        // if('agent' === pkg.name) {
-        //   cmdList.push('obfuscate:resource');
-        //   cmdList.push('obfuscate:vendor');
-        // }
-        cmdList.push('obfuscate:resource');
-        cmdList.push('obfuscate:vendor');
-
-        cmdList.push('compress:project');
-        cmdList.push('compress:project1');
-      }
-
       if(event && event.finish) {
         event.finish({
           mode: currentMode,
           cmdList:cmdList
         });
       }
+
+      if(pkg.currentMode === MODE.RELEASE) {
+        if('agent' === pkg.name || 'domains' === pkg.name || 'photos' === pkg.name) {
+          cmdList.push('obfuscate:resource');
+          cmdList.push('obfuscate:vendor');
+        }
+        // cmdList.push('obfuscate:resource');
+        // cmdList.push('obfuscate:vendor');
+
+        cmdList.push('compress:project');
+        cmdList.push('compress:project1');
+      }
+
     }
 
     grunt.task.run(cmdList);
